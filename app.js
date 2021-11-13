@@ -11,6 +11,7 @@ const User = require('./models/UserSchema')
 app.use(cookieParser(process.env.SECRET_KEY));
 app.use(require('./router/auth'))
 app.use(require('./router/post'))
+app.use(require('./router/questions'))
 
 
 
