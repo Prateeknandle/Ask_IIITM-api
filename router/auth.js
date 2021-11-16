@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 require('../db/connection');  
 const User = require("../models/UserSchema");
-const authenticate = require("../middleware/authenticate");
 
-router.get('/k',authenticate,(req,res)=>{
-    res.send("hello");
-})
+
 router.post('/signup',async(req,res) =>{
     const {name,email,password,cpassword} = req.body;
     
@@ -23,12 +18,9 @@ router.post('/signup',async(req,res) =>{
         }else if( password != cpassword){
             return res.status(422).json({error:"password not same"});
         }else{
-            bcrypt.hash(password,12)
-            .then(hashedpass=>{
-                const user = new User({name,email,password:hashedpass});
-                 user.save();
-                res.status(201).json({message:"done"});
-            }) 
+            const user = new User({name,email,password});
+            await user.save();
+             res.status(201).json({message:"done"});
         }
     }catch(err){
         console.log(err);
