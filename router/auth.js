@@ -40,9 +40,15 @@ router.post('/signup',async(req,res) =>{
                     const isMatch = await bcrypt.compare(password,userlogin.password);
                     const token = await userlogin.genrateAuthToken();
                         console.log(token);
+<<<<<<< HEAD
                         const {_id,name,email} = userlogin
                         return res.json({token,user:{_id,name,email}})
                     //     res.cookie("jwtoken",token,{
+=======
+                         const {_id,name,email} = userlogin
+                        return res.json({token,user:{_id,username,email}})
+                    //      res.cookie("jwtoken",token,{
+>>>>>>> refs/remotes/origin/master
                     //     expires:new Date(Date.now()+25892000000),
                     //     httpOnly:true
                     // })
