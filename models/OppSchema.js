@@ -13,6 +13,14 @@ const OppSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    location:{
+        type:String,
+        required:true
+    },
+    experience:{
+        type:String,
+        required:true
+    },
     postedBy: {
          type: mongoose.Schema.Types.ObjectId,
          ref: "USER"

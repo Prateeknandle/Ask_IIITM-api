@@ -5,9 +5,9 @@ const authenticate = require("../middleware/authenticate");
 require('../db/connection');
 const Opp = require('../models/OppSchema');
 
-router.get('/oppurtunity',authenticate,(req,res)=>{
-    Opp.find()
-    .populate("postedBy","_id username")
+router.get('/opportunity',authenticate,(req,res)=>{
+    Opp.find({})
+    .populate("postedBy","_id name")
     .then(opps=>{
         res.json(opps)
     }).catch(err=>{
@@ -16,11 +16,11 @@ router.get('/oppurtunity',authenticate,(req,res)=>{
 })
 
 router.post('/writeopp',authenticate,async(req,res)=>{
-    const{title,desc,ld} = req.body;
-    if(!title||!desc||!ld){
+    const{title,desc,location,experience,ld} = req.body;
+    if(!title||!desc||!location||!experience||!ld){
         return res.status(422).json({error:"Fill all the fields"})
     }
-    const opp = new Opp({title,desc,ld})
+    const opp = new Opp({title,desc,location,experience,ld,postedBy:req.rootUser})
     await opp.save();
     res.status(201).json({message:"done"});
 })

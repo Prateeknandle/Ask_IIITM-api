@@ -7,8 +7,7 @@ const Post = require('../models/PostSchema');
 
 router.get('/post',authenticate,(req,res)=>{
     Post.find()
-    .populate("postedBy","_id username")
-    .populate("comments.postedBy","_id username")
+    .populate("postedBy","_id name")
     .then(posts=>{
         res.json(posts)
     }).catch(err=>{
@@ -23,7 +22,7 @@ router.post('/write',authenticate,async(req,res) =>{
     }
   // req.rootUser.password = undefined
    //req.rootUser.cpassword = undefined
-        const post = new Post({title,body});
+        const post = new Post({title,body,postedBy:req.rootUser});
        // console.log(req.rootUser);
     await post.save();
      res.status(201).json({message:"done"});
@@ -32,7 +31,7 @@ router.post('/write',authenticate,async(req,res) =>{
 
 router.get('/myprofile',authenticate,(req,res)=>{
     Post.find({postedBy:req.rootUser._id})
-    .populate("postedBy","_id username")
+    .populate("postedBy","_id name")
     .then(mypost=>{
         res.json({mypost})
     })
@@ -113,8 +112,7 @@ router.put('/post/comment',authenticate,(req,res)=>{
     },{
         new:true
     })
-    .populate("comments.postedBy","_id username")
-   // .populate("postedBy","_id username")
+    .populate("comments.postedBy","_id name")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({errror:err})
@@ -126,22 +124,15 @@ router.put('/post/comment',authenticate,(req,res)=>{
 
 
 router.get('/post/:id',async (req,res)=>{
-    try{
-        const post = await Post.findById(req.params.id);
-        res.status(200).json(post);
-    }catch (err) {
-        if (err.kind === "ObjectId") {
-            return res.status(404).json({
-                errors: [
-                    {
-                        msg: "User not found",
-                        status: "404",
-                    },
-                ],
-            });
-        }
-    }
-})
+        Post.findById(req.params.id)
+        .populate("postedBy","_id name")
+        .populate("comments.postedBy","id name")
+        .then(post=>{
+            res.json(post)
+        }).catch(err=>{
+            console.log(err)
+        })
+    })
 
 router.get("/c/", async (req, res) => {
     const heading = req.query.heading;

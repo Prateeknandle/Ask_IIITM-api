@@ -8,16 +8,17 @@ const PostSchema = new mongoose.Schema({
     body:{
         type:String,
         required:true
-    },likes:[{type:mongoose.Schema.Types.ObjectId,ref:"USER"}],
-    comments:[{
-        text:String,
-        postedBy:{type:mongoose.Schema.Types.ObjectId,ref:"USER"}
-    }],
+    },
+     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"USER"}],
+     comments:[{
+         text:String,
+         postedBy:{type:mongoose.Schema.Types.ObjectId,ref:"USER"}
+     }],
    postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "USER"
-    },
-    categories: [{ type: String, required: true }]
+    }
+    //,categories: [{ type: String, required: true }]
 })
 
 const Post = module.exports = mongoose.model('POST', PostSchema);
