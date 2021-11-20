@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt')
 require('../db/connection');  
 const User = require("../models/UserSchema");
 
@@ -40,11 +41,11 @@ router.post('/signup',async(req,res) =>{
                     const token = await userlogin.genrateAuthToken();
                         console.log(token);
                          const {_id,name,email} = userlogin
-                        //return res.json({token,user:{_id,username,email}})
-                         res.cookie("jwtoken",token,{
-                        expires:new Date(Date.now()+25892000000),
-                        httpOnly:true
-                    })
+                        return res.json({token,user:{_id,username,email}})
+                    //      res.cookie("jwtoken",token,{
+                    //     expires:new Date(Date.now()+25892000000),
+                    //     httpOnly:true
+                    // })
                     
 
                     if(!isMatch){
