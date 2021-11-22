@@ -9,15 +9,16 @@ const QuestionSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    pic:{
-        type:String,
-        default:"no photo"
-    },
+    // pic:{
+    //     type:String,
+    //     default:"no photo"
+    // },
     answers:[
         {
             answer:{
                 type:String
             },
+            likes:[{type:mongoose.Schema.Types.ObjectId,ref:"USER"}],
             // picofa:{
             //     type:String,
             //     default:"no photo"
@@ -31,8 +32,8 @@ const QuestionSchema = new mongoose.Schema({
     postedBy: {
          type: mongoose.Schema.Types.ObjectId,
          ref: "USER"
-     },
-     categories: [{ type: String, required: true }]
+     }
+    //  categories: [{ type: String, required: true }]
 })
 
 const Question = module.exports = mongoose.model('QUESTION', QuestionSchema);
