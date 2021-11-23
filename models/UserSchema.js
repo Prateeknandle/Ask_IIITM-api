@@ -24,7 +24,47 @@ const UserSchema = new mongoose.Schema({
                  required: true
             }
         }
-    ]
+    ],
+    lname:{
+        type:String,
+        
+    },
+    mobile:{
+        type:Number,
+        
+    },
+    address:{
+        type:String,
+        
+    },
+    city:{
+        type:String,
+        
+    },
+    state:{
+        type:String,
+        
+    },
+    position:{
+        type:String,
+        
+    },
+    exp:{
+        type:String,
+        
+    },
+    edu:{
+        type:String,
+        
+    },
+    skils:{
+        type:String,
+        
+    },
+    achievements:{
+        type:String,
+        
+    }
 })
 
 UserSchema.pre('save',async function(next){
