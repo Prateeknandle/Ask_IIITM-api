@@ -13,6 +13,7 @@ app.use(require("./router/auth"));
 app.use(require("./router/post"));
 app.use(require("./router/questions"));
 app.use(require("./router/opp"));
+app.use(require("./router/profile"))
 
 const PORT = process.env.PORT;
 
